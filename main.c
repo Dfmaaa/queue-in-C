@@ -16,8 +16,9 @@ struct node{
     #pragma pack(0)
 #endif
 typedef struct node _LINKED_LIST_QUEUE;
-void enqueue(int,_LINKED_LIST_QUEUE**,_LINKED_LIST_QUEUE*);
-void enqueue(int value, _LINKED_LIST_QUEUE **queue_head, _LINKED_LIST_QUEUE *tail){
+void enqueue(int,_LINKED_LIST_QUEUE**,_LINKED_LIST_QUEUE**);
+_LINKED_LIST_QUEUE dequeue(_LINKED_LIST_QUEUE**, int*);
+void enqueue(int value, _LINKED_LIST_QUEUE **queue_head, _LINKED_LIST_QUEUE **tail){
     if(*queue_head==NULL){
         *queue_head=(_LINKED_LIST_QUEUE*)malloc(sizeof(_LINKED_LIST_QUEUE));
         if(*queue_head==NULL){
@@ -27,7 +28,7 @@ void enqueue(int value, _LINKED_LIST_QUEUE **queue_head, _LINKED_LIST_QUEUE *tai
         (**queue_head).data=value;
         (**queue_head).parent=NULL;
         (**queue_head).next=NULL;
-        tail=*queue_head;
+        *tail=*queue_head;
         return;
     }
     _LINKED_LIST_QUEUE *save_head=*queue_head;
@@ -41,12 +42,14 @@ void enqueue(int value, _LINKED_LIST_QUEUE **queue_head, _LINKED_LIST_QUEUE *tai
     (**queue_head).next=save_head;
     (*save_head).parent=*queue_head;
 }
-_LINKED_LIST_QUEUE dequeue(_LINKED_LIST_QUEUE *tail, int *SIGEND){
-    _LINKED_LIST_QUEUE retstruct=*tail;
-    if((*tail).parent==NULL){
+_LINKED_LIST_QUEUE dequeue(_LINKED_LIST_QUEUE **tail, int *SIGEND){
+    _LINKED_LIST_QUEUE retstruct=**tail;
+    if((**tail).parent==NULL){
         *SIGEND=1;
     }
-    tail=(*tail).parent;
-    free((*tail).next);
+    *tail=(**tail).parent;
+    if(*tail!=NULL){
+        free((**tail).next);
+    }
     return retstruct;
 }
