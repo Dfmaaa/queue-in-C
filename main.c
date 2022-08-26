@@ -45,10 +45,11 @@ void enqueue(int value, _LINKED_LIST_QUEUE **queue_head, _LINKED_LIST_QUEUE **ta
 _LINKED_LIST_QUEUE dequeue(_LINKED_LIST_QUEUE **tail, int *SIGEND){
     _LINKED_LIST_QUEUE retstruct=**tail;
     if((**tail).parent==NULL){
+        free(*tail);
         *SIGEND=1;
     }
-    *tail=(**tail).parent;
-    if(*tail!=NULL){
+    else{
+        *tail=(**tail).parent;
         free((**tail).next);
     }
     return retstruct;
