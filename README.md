@@ -21,4 +21,4 @@ Just uncomment the fourth line if you want packing. There's a detailed explanati
 ## LeakSanitizer(libasan) output
 (nothing, which means no leaks.)
 
-If someone thinks this queue can be made better, please make a pull request or an issue.
+If someone thinks this queue can be made better, please create a pull request or an issue.
